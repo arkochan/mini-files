@@ -17,6 +17,9 @@ func SetupRoutes(minioClient *minio.Client) {
 		handlers.HandleGetDownloadURL(w, r, minioClient)
 	})
 
+	// Serve favicon
+	http.HandleFunc("/favicon.ico", handlers.FaviconHandler)
+
 	// Serve static files
 	http.Handle("/", http.FileServer(http.Dir("pages")))
 }

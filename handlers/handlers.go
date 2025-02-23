@@ -40,3 +40,7 @@ func HandleGetDownloadURL(w http.ResponseWriter, r *http.Request, minioClient *m
 
 	fmt.Fprint(w, url)
 }
+
+func FaviconHandler(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "public/favicon.ico")
+}
