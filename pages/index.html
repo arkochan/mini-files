@@ -2,33 +2,20 @@
 <html>
 <head>
     <title>📁ChanFiles</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-        }
-        .container {
-            border: 1px solid #ccc;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-    </style>
   <link href="./output.css" rel="stylesheet">
 </head>
 <body>
     <h1>📁ChanFiles</h1>
     
-    <div class="bg-blue-100 container">
+    <div class="bg-blue-100 border border-blue-100 py-2 px-4 my-6 rounded-md shadow-md ">
         <h2>Upload File</h2>
-        <input type="file" id="fileInput">
+        <input class="border border-blue-200 rounded-xl px-3 py-1 bg-gray-100" type="file" id="fileInput">
         <button onclick="uploadFile()">Upload</button>
     </div>
 
-    <div class="container">
-        <h2>Download File</h2>
-        <input type="text" id="filename" placeholder="Enter filename">
+    <div class="bg-red-100 border border-red-100 py-2 px-4 my-6 rounded-md shadow-md ">
+        <h2 class="text-2xl mb-2">Download File</h2>
+        <input class=" border border-red-200 rounded-xl px-3 py-1 bg-gray-100" type="text" id="filename" placeholder="Enter filename">
         <button onclick="downloadFile()">Get Download Link</button>
     </div>
 
