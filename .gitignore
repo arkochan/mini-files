@@ -1,2 +1,4 @@
 files/*
 node_modules
+minio_data
+
