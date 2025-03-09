@@ -1,69 +1,110 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>📁ChanFiles</title>
+  <title>ChanFiles</title>
   <link href="./output.css" rel="stylesheet">
 </head>
+
 <body>
-    <h1>📁ChanFiles</h1>
-    
+  <div class="w-full h-fit relative bg-white ">
+    <div class="w-full h-[760px] bg-gradient-to-r from-fuchsia-600 to-fuchsia-300"></div>
+    <div
+      class="w-[1374px] p-2.5 left-[177px] top-[45px] absolute inline-flex flex-col justify-start items-start gap-2.5">
+      <div class="self-stretch flex flex-col justify-start items-center gap-32">
+        <div class="w-[1354px] h-7 relative">
+          <div class="inline-flex justify-start items-center gap-60">
+            <div class="w-40 relative justify-start text-white text-2xl font-medium ">Home</div>
+            <div class="w-40 relative justify-start text-white text-2xl font-medium ">Upload</div>
+            <div class="w-40 relative justify-start text-white text-2xl font-medium ">Download</div>
+            <div class="w-40 relative justify-start text-white text-2xl font-medium ">About</div>
+          </div>
+        </div>
+        <div class="inline-flex justify-start items-center gap-64">
+          <div class="w-96 inline-flex flex-col justify-start items-center gap-10">
+            <div class="self-stretch flex flex-col justify-start items-center gap-7">
+              <div class="self-stretch relative justify-start text-white text-6xl font-extrabold ">Files to cloud</div>
+              <div class="self-stretch relative text-center justify-start text-white text-6xl font-extrabold ">Super
+                Easy</div>
+            </div>
+            <div class="w-60 h-16 relative">
+              <div class="w-60 h-16 left-0 top-0 absolute bg-fuchsia-50 rounded-[20px]"></div>
+              <div
+                class="w-36 h-8 left-[52px] top-[15.44px] absolute justify-start text-neutral-700 text-2xl font-extrabold ">
+                Upload Now</div>
+            </div>
+          </div>
+          <div class="w-96 h-96 relative">
+            <img class="w-24 h-24 left-[171.95px] top-0 absolute" src="https://placehold.co/94x94" />
+            <img class="w-24 h-24 left-[304.12px] top-[99.42px] absolute" src="https://placehold.co/94x94" />
+            <img class="w-24 h-24 left-0 top-[156.63px] absolute" src="https://placehold.co/94x94" />
+            <img class="w-24 h-24 left-[270.40px] top-[312.56px] absolute" src="https://placehold.co/94x94" />
+            <img class="w-24 h-24 left-[93px] top-[307.18px] absolute" src="https://placehold.co/94x94" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="max-w-[800px] mx-auto">
     <div class="bg-blue-100 border border-blue-100 py-2 px-4 my-6 rounded-md shadow-md ">
-        <h2>Upload File</h2>
-        <input class="border border-blue-200 rounded-xl px-3 py-1 bg-gray-100" type="file" id="fileInput">
-        <button onclick="uploadFile()">Upload</button>
+      <h2>Upload File</h2>
+      <input class="border border-blue-200 rounded-xl px-3 py-1 bg-gray-100" type="file" id="fileInput">
+      <button onclick="uploadFile()">Upload</button>
     </div>
 
     <div class="bg-red-100 border border-red-100 py-2 px-4 my-6 rounded-md shadow-md ">
-        <h2 class="text-2xl mb-2">Download File</h2>
-        <input class=" border border-red-200 rounded-xl px-3 py-1 bg-gray-100" type="text" id="filename" placeholder="Enter filename">
-        <button onclick="downloadFile()">Get Download Link</button>
+      <h2 class="text-2xl mb-2">Download File</h2>
+      <input class=" border border-red-200 rounded-xl px-3 py-1 bg-gray-100" type="text" id="filename"
+        placeholder="Enter filename">
+      <button onclick="downloadFile()">Get Download Link</button>
     </div>
+  </div>
+  <script>
+    async function uploadFile() {
+      const fileInput = document.getElementById('fileInput');
+      const file = fileInput.files[0];
+      if (!file) {
+        alert('Please select a file');
+        return;
+      }
 
-    <script>
-        async function uploadFile() {
-            const fileInput = document.getElementById('fileInput');
-            const file = fileInput.files[0];
-            if (!file) {
-                alert('Please select a file');
-                return;
-            }
+      try {
+        // Get presigned URL for upload
+        const response = await fetch(`/get-upload-url?filename=${file.name}`);
+        const presignedUrl = await response.text();
 
-            try {
-                // Get presigned URL for upload
-                const response = await fetch(`/get-upload-url?filename=${file.name}`);
-                const presignedUrl = await response.text();
+        // Upload file using presigned URL
+        await fetch(presignedUrl, {
+          method: 'PUT',
+          body: file
+        });
 
-                // Upload file using presigned URL
-                await fetch(presignedUrl, {
-                    method: 'PUT',
-                    body: file
-                });
+        alert('File uploaded successfully!');
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Upload failed');
+      }
+    }
 
-                alert('File uploaded successfully!');
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Upload failed');
-            }
-        }
+    async function downloadFile() {
+      const filename = document.getElementById('filename').value;
+      if (!filename) {
+        alert('Please enter a filename');
+        return;
+      }
 
-        async function downloadFile() {
-            const filename = document.getElementById('filename').value;
-            if (!filename) {
-                alert('Please enter a filename');
-                return;
-            }
+      try {
+        const response = await fetch(`/get-download-url?filename=${filename}`);
+        const presignedUrl = await response.text();
 
-            try {
-                const response = await fetch(`/get-download-url?filename=${filename}`);
-                const presignedUrl = await response.text();
-                
-                // Open download link in new tab
-                window.open(presignedUrl, '_blank');
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Failed to get download link');
-            }
-        }
-    </script>
+        // Open download link in new tab
+        window.open(presignedUrl, '_blank');
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to get download link');
+      }
+    }
+  </script>
 </body>
+
 </html>
