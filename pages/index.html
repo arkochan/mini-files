@@ -8,13 +8,14 @@
 
 <body>
   <div class="w-full h-fit relative bg-white ">
-    <div class="w-full h-[760px] abosolute left-0 top-0 -z-100 bg-gradient-to-r from-fuchsia-600 to-fuchsia-300">
+    <div
+      class="w-full h-[760px] abosolute left-0 bg-blue-300 top-0 -z-100 bg-gradient-to-r from-fuchsia-600 to-fuchsia-300">
       <div class="mx-auto self-stretch flex flex-col justify-start items-center pt-8 mt-10 gap-32">
-        <div class="mx-auto inline-flex justify-center items-center gap-60">
-          <div class="w-40  text-white text-2xl font-medium ">Home</div>
-          <div class="w-40  text-white text-2xl font-medium ">Upload</div>
-          <div class="w-40  text-white text-2xl font-medium ">Download</div>
-          <div class="w-40  text-white text-2xl font-medium ">About</div>
+        <div class="mx-auto inline-flex mt-10 pt-8 justify-center items-center gap-60">
+          <div class="w-40  text-white text-2xl font-medium">Home</div>
+          <div class="w-40  text-white text-2xl font-medium">Upload</div>
+          <div class="w-40  text-white text-2xl font-medium">Download</div>
+          <div class="w-40  text-white text-2xl font-medium">About</div>
         </div>
         <div class="inline-flex justify-start items-center gap-64">
           <div class="w-96 inline-flex flex-col justify-start items-center gap-10">
@@ -46,7 +47,7 @@
   </div>
   <div class="max-w-[800px] mx-auto">
     <div class="bg-blue-100 border border-blue-100 py-2 px-4 my-6 rounded-md shadow-md ">
-      <h2>Upload File</h2>
+      <h2 class="text-2xl mb-2">Upload File</h2>
       <input class="border border-blue-200 rounded-xl px-3 py-1 bg-gray-100" type="file" id="fileInput">
       <button onclick="uploadFile()">Upload</button>
     </div>
